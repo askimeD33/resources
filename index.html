@@ -1,3 +1,86 @@
-<script>
-  window.location.href = "http://192.168.0.2:8080";
-</script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dark Theme Page</title>
+  <style>
+    /* Base styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #121212;
+      color: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    /* Container styling */
+    .container {
+      text-align: center;
+      padding: 2rem;
+      background: #1e1e1e;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    h1 {
+      margin-bottom: 1rem;
+      font-size: 2rem;
+      color: #ff6f61;
+    }
+
+    p {
+      margin-bottom: 1.5rem;
+      font-size: 1.2rem;
+      color: #b0b0b0;
+    }
+
+    /* Button styling */
+    .buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    .button {
+      padding: 0.8rem 1.5rem;
+      font-size: 1rem;
+      font-weight: bold;
+      color: #ffffff;
+      background: #333333;
+      border: 2px solid #ff6f61;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .button:hover {
+      background: #ff6f61;
+      color: #121212;
+    }
+
+    .button:active {
+      transform: scale(0.95);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Pick a side</h1>
+    <p>Select Offline if you're in the same network</p>
+    <div class="buttons">
+      <button class="button" onclick="window.location.href='http:\/\/192.168.0.2:8080'">Offline</button>
+      <button class="button" onclick="window.location.href='https:\/\/u3.ns9.icu'">Online</button>
+    </div>
+  </div>
+</body>
+</html>
+
