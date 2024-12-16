@@ -100,7 +100,7 @@
   <div class="container">
     <h1>Server Page</h1>
     <p id="ids">Scanning for active servers<br>
-    <div class="loader"></div>
+    <div class="loader" id="loader"></div>
     <div class="buttons" id="butns"></div>
   </div>
 
@@ -112,14 +112,14 @@
 
 async function checkUrlAccessibility(url) {
     try {
-        const response = await fetch(url, { method: 'HEAD' });
+        const response = await fetch(url, { method: 'HEAD', mode: 'no-cors' });
         if (response.ok) {
             return true;
         } else {
             return false;
         }
     } catch (error) {
-        return true;
+        return false;
     }
 }
 
@@ -131,6 +131,7 @@ async function setupButtons1() {
         button.onclick = () => (window.location.href = "http://192.168.0.2");
         btn.appendChild(button); // Adds the button to the 'btn' element
         btn.appendChild(document.createElement("br"));
+        document.getElementById("ids").innerHTML = "";
     }else{
         setTimeout(() => {setupButtons1();}, 2000);
     }
@@ -142,6 +143,7 @@ async function setupButtons2() {
         button.innerText = "WAN Connect (via internet)";
         button.onclick = () => (window.location.href = "https://u3.ns9.icu");
         btn.appendChild(button);
+        document.getElementById("ids").innerHTML = "";
     }else{
         setTimeout(() => {setupButtons2();}, 2000);
     }
