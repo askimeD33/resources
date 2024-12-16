@@ -24,35 +24,39 @@
 
     /* Container styling */
     .container {
+        min-width: 50%;
       text-align: center;
-      padding: 2rem;
+      padding: 3rem 2rem ;
       background: #1e1e1e;
       border-radius: 10px;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
       height:80vh;
+      position: relative;
     }
 
     h1 {
-      margin-bottom: 1rem;
+        margin-top: 1rem;
+      margin-bottom: 2rem;
       font-size: 2rem;
       color: #ff6f61;
     }
 
     p {
-      margin-bottom: 1.5rem;
+      margin-bottom: 2.5rem;
       font-size: 1.2rem;
       color: #b0b0b0;
     }
 
     /* Button styling */
     .buttons {
-      display: flex;
       gap: 1rem;
       justify-content: center;
+      display: block;
     }
 
     .button {
-      padding: 0.8rem 1.5rem;
+      padding: 1.5rem 2.9rem;
+      width: 80%;
       font-size: 1rem;
       font-weight: bold;
       color: #ffffff;
@@ -61,6 +65,7 @@
       border-radius: 5px;
       cursor: pointer;
       transition: all 0.3s ease;
+      margin-bottom: 2rem;
     }
 
     .button:hover {
@@ -71,17 +76,80 @@
     .button:active {
       transform: scale(0.95);
     }
+
+    .loader {
+        position: absolute;
+        top: 0%;
+        left: 0%;
+        right: 0%;
+        /*  width: calc(50% / cos(45deg));*/
+        width: 100%;
+        height: 14px;
+        /*  background: repeating-linear-gradient(-45deg,#000 0 30px,#0000 0 45px) left/200% 100%;*/
+        background: repeating-linear-gradient(45deg,#5effb4 0 30px,#0000 0 42px) left/200% 100%;
+        animation: l3 4s infinite linear;
+    }
+    @keyframes l3 {
+        100% {background-position:right}
+    }
+
   </style>
+
 </head>
 <body>
   <div class="container">
-    <h1>Pick a side</h1>
-    <p>Select Offline if you're in the same network</p>
-    <div class="buttons">
-      <button class="button" onclick="window.location.href='http:\/\/192.168.0.2'">Offline</button>
-      <button class="button" onclick="window.location.href='https:\/\/u3.ns9.icu'">Online</button>
-    </div>
+    <h1>Server Page</h1>
+    <p id="ids">Scanning for active servers<br>
+    <div class="loader"></div>
+    <div class="buttons" id="butns"></div>
   </div>
+
+  <script>
+    const p = document.getElementById("ids");
+    const btn = document.getElementById("butns");
+    const url1 = "http://192.168.0.2";
+    const url2 = "https://u3.ns9.icu";
+
+async function checkUrlAccessibility(url) {
+    try {
+        const response = await fetch(url, { method: 'HEAD' });
+        if (response.ok) {
+            return true;
+        } else {
+            return false;
+        }
+    } catch (error) {
+        return false;
+    }
+}
+
+async function setupButtons1() {
+    if (await checkUrlAccessibility(url1)) {
+        const button = document.createElement("button");
+        button.className = "button";
+        button.innerText = "LAN Connect";
+        button.onclick = () => (window.location.href = "http://192.168.0.2");
+        btn.appendChild(button); // Adds the button to the 'btn' element
+        btn.appendChild(document.createElement("br"));
+    }else{
+        setTimeout(() => {setupButtons1();}, 2000);
+    }
+}
+async function setupButtons2() {
+    if (await checkUrlAccessibility(url2)) {
+        const button = document.createElement("button");
+        button.className = "button";
+        button.innerText = "WAN Connect (via internet)";
+        button.onclick = () => (window.location.href = "https://u3.ns9.icu");
+        btn.appendChild(button);
+    }else{
+        setTimeout(() => {setupButtons2();}, 2000);
+    }
+}
+
+setupButtons1();
+setupButtons2();
+  </script>
 </body>
 </html>
 
