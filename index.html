@@ -131,7 +131,7 @@ async function setupButtons1() {
         button.onclick = () => (window.location.href = "http://192.168.0.2");
         btn.appendChild(button); // Adds the button to the 'btn' element
         btn.appendChild(document.createElement("br"));
-        document.getElementById("ids").innerHTML = "";
+        document.getElementById("loader").innerHTML = "";
     }else{
         setTimeout(() => {setupButtons1();}, 2000);
     }
@@ -143,7 +143,7 @@ async function setupButtons2() {
         button.innerText = "WAN Connect (via internet)";
         button.onclick = () => (window.location.href = "https://u3.ns9.icu");
         btn.appendChild(button);
-        document.getElementById("ids").innerHTML = "";
+        document.getElementById("loader").innerHTML = "";
     }else{
         setTimeout(() => {setupButtons2();}, 2000);
     }
