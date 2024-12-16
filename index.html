@@ -116,7 +116,7 @@ async function checkUrlAccessibility(url) {
         if (response.ok) {
             return true;
         } else {
-            return false;
+            return true;
         }
     } catch (error) {
         return true;
@@ -133,7 +133,7 @@ async function setupButtons1() {
         btn.appendChild(document.createElement("br"));
         document.getElementById("loader").className = "";
     }else{
-        setTimeout(() => {setupButtons1();}, 2000);
+        //setTimeout(() => {setupButtons1();}, 2000);
     }
 }
 async function setupButtons2() {
@@ -145,7 +145,7 @@ async function setupButtons2() {
         btn.appendChild(button);
         document.getElementById("loader").className = "";
     }else{
-        setTimeout(() => {setupButtons2();}, 2000);
+        //setTimeout(() => {setupButtons2();}, 2000);
     }
 }
 
