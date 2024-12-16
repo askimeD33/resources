@@ -112,7 +112,8 @@
 
 async function checkUrlAccessibility(url) {
     try {
-        const response = await fetch(url, { method: 'HEAD', mode: 'no-cors' });
+        //const response = await fetch(url, { method: 'HEAD', mode: 'no-cors' });
+      const response["ok"] = 1
         if (response.ok) {
             return true;
         } else {
