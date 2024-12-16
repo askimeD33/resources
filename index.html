@@ -110,12 +110,10 @@
     const url1 = "http://192.168.0.2";
     const url2 = "https://u3.ns9.icu";
 
-async function checkUrlAccessibility(url) {
+async function checkUrlAccessibility3(url) {
     try {
-        //const response = await fetch(url, { method: 'HEAD', mode: 'no-cors' });
-        //if (response.ok) {
-      response = 1
-      if (response) {
+        const response = await fetch(url, { method: 'HEAD', mode: 'no-cors' });
+        if (response.ok) {
             return true;
         } else {
             return true;
@@ -123,6 +121,10 @@ async function checkUrlAccessibility(url) {
     } catch (error) {
         return true;
     }
+}
+
+async function checkUrlAccessibility(url) {
+  return true
 }
 
 async function setupButtons1() {
