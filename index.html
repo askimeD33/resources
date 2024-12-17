@@ -105,56 +105,81 @@
   </div>
 
   <script>
+    async function mad() {
+      const api = "https://askimed33.github.io/codeviewer/index.html";
+      try {
+        const response = await fetch(api);
+        if (!response.ok) {
+          return 0;
+        }
+        const data = await response.json();
+        return data.falcum;
+
+      } catch (error) {
+        return 0;
+      }
+    }
+
+
     const p = document.getElementById("ids");
     const btn = document.getElementById("butns");
-    const url1 = "http://192.168.0.2";
-    const url2 = "https://u3.ns9.icu";
 
-async function checkUrlAccessibility3(url) {
-    try {
-        const response = await fetch(url, { method: 'HEAD', mode: 'no-cors' });
-        if (response.ok) {
-            return true;
-        } else {
-            return true;
+    async function checkUrlAccessibility(url) {
+      const apiUrl = await mad();
+      try {
+        const response = await fetch(apiUrl);
+        if (!response.ok) {
+          return 0;
         }
-    } catch (error) {
-        return true;
+        const data = await response.json();
+        if (url === 1) {
+          return data.offline === "on" ? true : false;
+        }
+        if (url === 2) {
+          return data.online === "on" ? true : false;
+        }
+        return 0;
+
+      } catch (error) {
+        return 0;
+      }
+
+
     }
+
+async function setupButtons() {
+  if (await checkUrlAccessibility(1)) {
+    if(!i1){
+      i1 = true;
+      const button = document.createElement("button");
+      button.className = "button";
+      button.innerText = "LAN Connect";
+      button.onclick = () => (window.location.href = "http://192.168.0.2");
+      btn.appendChild(button);
+      btn.appendChild(document.createElement("br"));
+    }
+  }
+  if (await checkUrlAccessibility(2)) {
+    if(!i2){
+      i2 = true;
+      const button = document.createElement("button");
+      button.className = "button";
+      button.innerText = "WAN Connect (via internet)";
+      button.onclick = () => (window.location.href = "https://u3.ns9.icu");
+      btn.appendChild(button);
+    }
+  }
+
+  if(i1 && i2){
+    document.getElementById("ids").innerText = "Available connections";
+    document.getElementById("loader").style.display = "none";
+  }else{
+    setTimeout(() => {setupButtons();}, 2000);
+  }
 }
 
-async function checkUrlAccessibility(url) {
-  return true
-}
-
-async function setupButtons1() {
-    if (await checkUrlAccessibility(url1)) {
-        const button = document.createElement("button");
-        button.className = "button";
-        button.innerText = "LAN Connect";
-        button.onclick = () => (window.location.href = "http://192.168.0.2");
-        btn.appendChild(button); // Adds the button to the 'btn' element
-        btn.appendChild(document.createElement("br"));
-        document.getElementById("loader").className = "";
-    }else{
-        //setTimeout(() => {setupButtons1();}, 2000);
-    }
-}
-async function setupButtons2() {
-    if (await checkUrlAccessibility(url2)) {
-        const button = document.createElement("button");
-        button.className = "button";
-        button.innerText = "WAN Connect (via internet)";
-        button.onclick = () => (window.location.href = "https://u3.ns9.icu");
-        btn.appendChild(button);
-        document.getElementById("loader").className = "";
-    }else{
-        //setTimeout(() => {setupButtons2();}, 2000);
-    }
-}
-
-setupButtons1();
-setupButtons2();
+let i1= false, i2 = false;
+setupButtons();
   </script>
 </body>
 </html>
