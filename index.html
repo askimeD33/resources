@@ -98,8 +98,8 @@
 </head>
 <body>
   <div class="container">
-    <h1>Server Page</h1>
-    <p id="ids">Scanning for active servers<br>
+    <h1>Redirecting</h1>
+    <p id="ids">Scanning in progress...<br>
     <div class="loader" id="loader"></div>
     <div class="buttons" id="butns"></div>
   </div>
@@ -133,10 +133,12 @@
         }
         const data = await response.json();
         if (url === 1) {
-          return data.offline === "on" ? true : false;
+        //  return data.offline === "on" ? true : false;
+          if(data.offline === "on"){return data.link1;}else{return false;}
         }
         if (url === 2) {
-          return data.online === "on" ? true : false;
+        //  return data.online === "on" ? true : false;
+          if(data.online === "on"){return data.link2;}else{return false;}
         }
         return 0;
 
@@ -149,7 +151,8 @@
 
 async function setupButtons() {
   if (await checkUrlAccessibility(1)) {
-    if(!i1){
+    window.location.href = offline;
+    if(i1){
       i1 = true;
       const button = document.createElement("button");
       button.className = "button";
@@ -160,6 +163,7 @@ async function setupButtons() {
     }
   }
   if (await checkUrlAccessibility(2)) {
+    window.location.href = online;
     if(!i2){
       i2 = true;
       const button = document.createElement("button");
@@ -169,17 +173,36 @@ async function setupButtons() {
       btn.appendChild(button);
     }
   }
-
-  if(i1 && i2){
-    document.getElementById("ids").innerText = "Available connections";
-    document.getElementById("loader").style.display = "none";
-  }else{
-    setTimeout(() => {setupButtons();}, 2000);
-  }
 }
+  async function raload() {
+    offline = await checkUrlAccessibility(1);
+    online = await checkUrlAccessibility(2);
+    if(offline){
+      i1 = true;
+      window.location.href = offline;
+    }
+    if(online){
+      i2 = true;
+      window.location.href = online;
+    }
+    
+  }
 
-let i1= false, i2 = false;
-setupButtons();
+  let i1= false, i2 = false;
+  raload();
+  if(!i1 && !i2){setTimeout(() => {raload();}, 5000);}
+
+
+//  if(i1 && i2){
+//    document.getElementById("ids").innerText = "Available connections";
+//    document.getElementById("loader").style.display = "none";
+//  }else{
+//    setTimeout(() => {setupButtons();}, 2000);
+//  }
+//}
+
+//setupButtons();
+
   </script>
 </body>
 </html>
